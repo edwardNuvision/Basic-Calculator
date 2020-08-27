@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## react-calculator
 
 This is where you include your WebPart documentation.
@@ -24,3 +25,7 @@ gulp test - TODO
 gulp serve - TODO
 gulp bundle - TODO
 gulp package-solution - TODO
+=======
+# Basic-Calculator
+React SPFX project
+>>>>>>> 020ee549102e2e2d8eeebf4110b7bb699f1e8a23
