@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx/client-side-web-part-manifest.schema.json",
+  "id": "a4695400-1fcc-4340-bd51-6bfc2795d911",
+  "alias": "ReactCalculatorWebPart",
+  "componentType": "WebPart",
+
+  "version": "*",
+  "manifestVersion": 2,
+
+
+  "requiresCustomScript": false,
+  "supportedHosts": ["SharePointWebPart"],
+
+  "preconfiguredEntries": [{
+    "groupId": "5c03119e-3074-46fd-976b-c60198311f70", 
+    "group": { "default": "Other" },
+    "title": { "default": "Basic Calculator" },
+    "description": { "default": "react-calculator description" },
+    "officeFabricIconFontName": "Page",
+    "properties": {
+      "description": "Calculator",
+      "inputRate": 8
+    }
+  }]
+}
