@@ -19,7 +19,8 @@
     "officeFabricIconFontName": "Page",
     "properties": {
       "description": "Calculator",
-      "inputRate": 8
+      "inputRate": 8,
+      "choice": "Multiply"
     }
   }]
 }

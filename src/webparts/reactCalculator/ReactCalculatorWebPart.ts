@@ -3,7 +3,8 @@ import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
   IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneTextField, 
+  PropertyPaneChoiceGroup
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 
@@ -14,6 +15,7 @@ import { IReactCalculatorProps } from './components/IReactCalculatorProps';
 export interface IReactCalculatorWebPartProps {
   description: string;
   inputRate: number;
+  choice: string;
 }
 
 export default class ReactCalculatorWebPart extends BaseClientSideWebPart <IReactCalculatorWebPartProps> {
@@ -24,6 +26,7 @@ export default class ReactCalculatorWebPart extends BaseClientSideWebPart <IReac
       {
         description: this.properties.description,
         inputRate: this.properties.inputRate,
+        choice: this.properties.choice
       }
     );
 
@@ -53,9 +56,30 @@ export default class ReactCalculatorWebPart extends BaseClientSideWebPart <IReac
                 PropertyPaneTextField('description', {
                   label: 'Please Enther a Title'
                 }),
+
                 PropertyPaneTextField('inputRate', {
                   label: 'Please Enter a Number for Rate'
                 }),
+
+                PropertyPaneChoiceGroup('choice', {
+                  label: "Please Select a Choice from Below", // don't forget to localize your test in a real-world solution
+                  options: [
+                    {
+                      key: 'Percent',
+                      text: 'Percent',
+
+                    },
+                    {
+                      key: 'Multiply',
+                      text: 'Multiply',
+                    },
+                    {
+                      key: 'Add',
+                      text: 'Add',
+                    }
+                  ]
+                }),
+        
                 
               ]
             }
