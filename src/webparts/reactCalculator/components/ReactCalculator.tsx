@@ -5,7 +5,7 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { DefaultButton, RatingBase } from 'office-ui-fabric-react';
 
-import { IReactCalculatorState } from './IReactCalculatorState'
+import { IReactCalculatorState } from './IReactCalculatorState';
 
 export default class ReactCalculator extends React.Component<IReactCalculatorProps, IReactCalculatorState> { 
 
@@ -16,37 +16,63 @@ export default class ReactCalculator extends React.Component<IReactCalculatorPro
     
 
     this.state = {
-      inputData: 10000,
+      inputData: 1000.50,
       outputData: 0,
       rate: 5,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.setTwoDigits = this.setTwoDigits.bind(this);
   }
 
   handleClick(e){
     e.preventDefault();
-
     switch(this.props.choice) {
       case "Multiply":
-        this.setState({ outputData: this.state.inputData * this.props.inputRate });  
+        this.setState({ outputData: (this.state.inputData * this.props.inputRate) });  
         break;
       case "Add": 
         this.setState({ outputData: this.state.inputData + this.props.inputRate });
         break;
       case "Percent":
         this.setState({ outputData: this.state.inputData * ((this.props.inputRate / 100) + 1)  });
-        
     }
-
-    
-
   }
 
   handleChange(e){
     e.preventDefault();
-    this.setState({ inputData: e.target.value });
+    this.setState({ inputData: e.target.value.substring(1) });
   }
+
+  async setTwoDigits(e){
+    e.preventDefault();
+
+    var temp = this.state.inputData.toString();
+
+    // if no digit, then add a 00
+    if(temp.indexOf(".") == -1){
+      var withDecimal = temp + ".00";
+  
+      alert("withDecimal:" + withDecimal + " Andddd number():"  + Number(withDecimal).toFixed(2) );
+      alert("setState: " +  parseFloat(Number(withDecimal).toFixed(2)) );
+
+      //alert("wow" + Number(Number(parseFloat(this.state.inputData.toString())).toFixed(2)) );
+      await this.setState({ inputData: parseFloat(Number(withDecimal).toFixed(2)) },  () => {
+        alert("Inside state: " + this.state.inputData);
+      });          
+    }
+    else {
+        //alert("wow" + Number(Number(parseFloat(this.state.inputData.toString())).toFixed(2)) );
+        await this.setState({ inputData: Number(Number(parseFloat(this.state.inputData.toString())).toFixed(2))},  () => {
+          alert("(else): setState: "+ Number(Number(parseFloat(this.state.inputData.toString())).toFixed(2)) );
+          alert("(else): inputData: " + this.state.inputData);
+        }
+        );
+    }
+       
+
+  }
+  
 
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
@@ -68,7 +94,7 @@ export default class ReactCalculator extends React.Component<IReactCalculatorPro
               <span className={ styles.title }>{escape(this.props.description)}</span>
             
 
-              <TextField style={{color:"#00394b"}} label="Requested Amount " defaultValue="0" onChange={this.handleChange} value={this.state.inputData.toString()}/>
+              <TextField style={{color:"#00394b"}} label="Requested Amount" defaultValue="0" onBlur={this.setTwoDigits} onChange={this.handleChange} value={"$" + this.state.inputData.toString()}/>
               
               <div style={{width: "100%", height: "auto" }}>
                 <p style={{padding: "0 1rem", color:"#00394b", display:"inline-block", fontSize: "1.5em"}}>
@@ -84,7 +110,7 @@ export default class ReactCalculator extends React.Component<IReactCalculatorPro
               </div>
               
 
-              <TextField label="Total Amount " readOnly defaultValue="0" value={this.state.outputData.toString()} />
+              <TextField label="Total Amount " readOnly defaultValue="0" value={"$" + this.state.outputData.toFixed(2).toString()} />
               <DefaultButton style={{ backgroundColor: "#00394b", color: "white", margin: "1rem 0 0 0"}} text="Calculate" onClick={this.handleClick} allowDisabledFocus /> 
             </div>
           </div>
