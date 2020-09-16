@@ -11,12 +11,10 @@ export default class ReactCalculator extends React.Component<IReactCalculatorPro
 
   // Consturctor for declaring and initializing State variables 
   constructor(props:IReactCalculatorProps) {    
-    super(props);
-
-    
+    super(props);    
 
     this.state = {
-      inputData: 1000.50,
+      inputData: 1000,
       outputData: 0,
       rate: 5,
     };
@@ -32,11 +30,12 @@ export default class ReactCalculator extends React.Component<IReactCalculatorPro
         this.setState({ outputData: (this.state.inputData * this.props.inputRate) });  
         break;
       case "Add": 
-        this.setState({ outputData: this.state.inputData + this.props.inputRate });
-        break;
+        this.setState({ outputData: (+this.state.inputData + +this.props.inputRate) });
+      break;
       case "Percent":
         this.setState({ outputData: this.state.inputData * ((this.props.inputRate / 100) + 1)  });
-    }
+        break;
+      }
   }
 
   handleChange(e){
@@ -47,30 +46,11 @@ export default class ReactCalculator extends React.Component<IReactCalculatorPro
   async setTwoDigits(e){
     e.preventDefault();
 
-    var temp = this.state.inputData.toString();
-
-    // if no digit, then add a 00
-    if(temp.indexOf(".") == -1){
-      var withDecimal = temp + ".00";
-  
-      alert("withDecimal:" + withDecimal + " Andddd number():"  + Number(withDecimal).toFixed(2) );
-      alert("setState: " +  parseFloat(Number(withDecimal).toFixed(2)) );
-
-      //alert("wow" + Number(Number(parseFloat(this.state.inputData.toString())).toFixed(2)) );
-      await this.setState({ inputData: parseFloat(Number(withDecimal).toFixed(2)) },  () => {
-        alert("Inside state: " + this.state.inputData);
-      });          
-    }
-    else {
+    var temp = this.state.inputData.toString();  
         //alert("wow" + Number(Number(parseFloat(this.state.inputData.toString())).toFixed(2)) );
         await this.setState({ inputData: Number(Number(parseFloat(this.state.inputData.toString())).toFixed(2))},  () => {
-          alert("(else): setState: "+ Number(Number(parseFloat(this.state.inputData.toString())).toFixed(2)) );
-          alert("(else): inputData: " + this.state.inputData);
-        }
-        );
-    }
-       
-
+          // Any Callback function
+        });
   }
   
 
