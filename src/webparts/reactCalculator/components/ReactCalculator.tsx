@@ -86,9 +86,16 @@ export default class ReactCalculator extends React.Component<IReactCalculatorPro
                   {escape(this.props.inputRate.toString())} 
                   {this.props.choice == "Multiply"? "x":""} 
                   {this.props.choice == "Percent"? "%":""} 
-                </p>
+                </p>             
               </div>
               
+              <div style={{width: "100%", height: "auto" }}>
+                <p style={{borderStyle:"solid", borderRadius: "15px", padding: "0 1rem", borderColor: "#f5821f", color: "#00394b", fontSize: "1.5em", display: "inline-block", float: "right", fontWeight: "bold"}}>
+                  {this.props.choice == "Add"? this.props.inputRate: "" }
+                  {this.props.choice == "Multiply"? this.props.inputRate :""} 
+                  {this.props.choice == "Percent"? (this.props.inputRate / 100 * this.state.inputData).toString():""} 
+                </p>
+              </div>
 
               <TextField label="Total Amount " readOnly defaultValue="0" value={"$" + this.state.outputData.toFixed(2).toString()} />
               <DefaultButton style={{ backgroundColor: "#00394b", color: "white", margin: "1rem 0 0 0"}} text="Calculate" onClick={this.handleClick} allowDisabledFocus /> 
